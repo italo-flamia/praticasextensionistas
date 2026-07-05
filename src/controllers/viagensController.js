@@ -24,8 +24,8 @@ const listarViagensController = async (req, res) => {
 const editarViagemController = async (req, res) => {
 	try {
 		const { id_viagem } = req.params
-		const { titulo_viagem } = req.body
-		const viagemAtualizada = await editarViagem(id_viagem, titulo_viagem, req.usuario.id)
+		const { titulo_viagem, status } = req.body
+		const viagemAtualizada = await editarViagem(id_viagem, titulo_viagem, status, req.usuario.id)
 		res.status(200).json({ viagem: viagemAtualizada })
 	} catch (erro) {
 		if (erro.message.includes('organizador') || erro.message.includes('participa')) {

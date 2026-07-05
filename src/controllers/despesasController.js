@@ -26,6 +26,19 @@ async function listarDespesasController(req, res) {
   }
 }
 
+async function editarDespesaController(req, res) {
+  try {
+    const { id_viagem, id_despesa } = req.params;
+    const despesa = await despesasService.editarDespesa(req.usuario.id, id_viagem, id_despesa, req.body);
+    res.status(200).json(despesa);
+  } catch (erro) {
+    if (erro.message.includes('não é participante')) {
+      return res.status(403).json({ erro: erro.message });
+    }
+    res.status(400).json({ erro: erro.message });
+  }
+}
+
 async function resumoFinanceiroController(req, res) {
   try {
     const { id_viagem } = req.params;
@@ -39,4 +52,4 @@ async function resumoFinanceiroController(req, res) {
   }
 }
 
-module.exports = { criarDespesaController, listarDespesasController, resumoFinanceiroController };
+module.exports = { criarDespesaController, listarDespesasController, editarDespesaController, resumoFinanceiroController };
